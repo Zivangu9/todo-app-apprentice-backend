@@ -39,7 +39,7 @@ public class TodoService {
         }
         return null;
     }
-    
+
     public Todo markTodoAsDone(Integer id) {
         Optional<Todo> todoData = repository.findById(id);
         if (todoData.isPresent()) {
@@ -47,6 +47,19 @@ public class TodoService {
             if (!updatedTodo.getDoneFlag()) {
                 updatedTodo.setDoneFlag(true);
                 updatedTodo.setDoneDate(new Date());
+            }
+            return repository.save(updatedTodo);
+        }
+        return null;
+    }
+
+    public Todo markTodoAsUndone(Integer id) {
+        Optional<Todo> todoData = repository.findById(id);
+        if (todoData.isPresent()) {
+            Todo updatedTodo = todoData.get();
+            if (updatedTodo.getDoneFlag()) {
+                updatedTodo.setDoneFlag(false);
+                updatedTodo.setDoneDate(null);
             }
             return repository.save(updatedTodo);
         }
