@@ -48,6 +48,33 @@ Si todo está corriendo bien en la consola se podrá ver el logo de spring y la 
 
 - **Controller**: es responsable de recibir y procesar peticiones REST, llama al servicio correspondiente y regresa una respuesta en forma de JSON.
     
-- **Service**: es responsable de hacer la lógica de negocio, en este caso aquí es donde validamos los datos entrantes si es necesario arroja excepciones. Si todo está bien entonces manda a llamar al repository.
+- **Service**: es responsable de hacer la lógica de negocio, es donde valido los datos entrantes si es necesario arroja excepciones. Si todo está bien entonces manda a llamar al repository.
   
 - **Repository**: es responsable de la persistencia de los datos, para este proyecto se almacenan los datos en memoria usando Java Collections
+
+## Estructura del proyecto
+```
+src
+├── main
+│   ├── java
+│   │   └── apprentice
+│   │       └── ivan
+│   │           └── todoappbackend
+│   │               ├── controllers
+│   │               ├── models
+│   │               ├── repositories
+│   │               ├── services
+│   │               └── wrappers
+│   └── resources
+└── test
+    └── java
+        └── apprentice
+            └── ivan
+                └── todoappbackend
+```
+### Descripción de los paquetes
+- **Controllers**: Todos los controladores del sistema.
+- **Models**: Entidades del sistema.
+- **Repositories**: Todos los repositorios del sistema.
+- **Services**: Todos los servicios del sistema.
+- **Wrappers**: Las clases que sirven para almacenar los datos en memoria.
