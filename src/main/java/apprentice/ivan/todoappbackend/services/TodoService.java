@@ -1,5 +1,7 @@
 package apprentice.ivan.todoappbackend.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,20 @@ public class TodoService {
 
     public Todo create(Todo todo) {
         // validate
-        return repository.createTodo(todo);
+        return repository.save(todo);
+    }
+
+    public Todo update(Integer id, Todo todo) {
+        Optional<Todo> todoData = repository.findById(id);
+        if (todoData.isPresent()) {
+            // Validate
+            Todo updatedTodo = todoData.get();
+            updatedTodo.setName(todo.getName());
+            updatedTodo.setDueDate(todo.getDueDate());
+            updatedTodo.setPriority(todo.getPriority());
+            return repository.save(updatedTodo);
+        }
+        // validate
+        return null;
     }
 }

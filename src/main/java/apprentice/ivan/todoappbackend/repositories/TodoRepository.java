@@ -1,6 +1,7 @@
 package apprentice.ivan.todoappbackend.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -40,7 +41,11 @@ public class TodoRepository {
         return new PageImpl<>(todos.subList(start, end), paging, todos.size());
     }
 
-    public Todo createTodo(Todo todo) {
-        return todosWrapper.addTodo(todo);
+    public Optional<Todo> findById(Integer id) {
+        return todosWrapper.findById(id);
+    }
+
+    public Todo save(Todo todo) {
+        return todosWrapper.save(todo);
     }
 }

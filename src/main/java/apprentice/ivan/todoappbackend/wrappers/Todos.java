@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import apprentice.ivan.todoappbackend.models.Priorities;
@@ -31,14 +32,40 @@ public class Todos {
         }
     }
 
-    public Todo addTodo(Todo todo) {
+    private Todo addTodo(Todo todo) {
         todo.setTodoId(currentId++);
         todos.add(todo);
         return todo;
     }
 
+    private Todo updateTodo(Todo todo) {
+        Integer index = this.indexOf(todo);
+        todos.set(index, todo);
+        return todos.get(index);
+    }
+
+    private Integer indexOf(Todo todo) {
+        for (int i = 0; i < todos.size(); i++) {
+            if (todos.get(i).getTodoId() == todo.getTodoId())
+                return i;
+        }
+        return -1;
+    }
+
+    public Todo save(Todo todo) {
+        Optional<Todo> currentTodo = findById(todo.getTodoId());
+        if (currentTodo.isPresent()) {
+            return updateTodo(currentTodo.get());
+        }
+        return addTodo(todo);
+    }
+
     public List<Todo> getTodos() {
         return Collections.unmodifiableList(todos);
+    }
+
+    public Optional<Todo> findById(Integer id) {
+        return new ArrayList<>(todos).stream().filter(todo -> todo.getTodoId() == id).findFirst();
     }
 
     public List<Todo> filterTodos(String sort, Boolean done, String name, Priorities priority) {
