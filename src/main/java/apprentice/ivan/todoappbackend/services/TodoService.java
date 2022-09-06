@@ -15,7 +15,12 @@ public class TodoService {
     private TodoRepository repository;
 
     public Page<Todo> filterTodos(Pageable paging, String sort, Boolean done, String name, Priorities priority) {
-        //Validate
+        // Validate
         return repository.filterTodos(paging, sort, done, name, priority);
+    }
+
+    public Todo create(Todo todo) {
+        // validate
+        return repository.createTodo(todo);
     }
 }

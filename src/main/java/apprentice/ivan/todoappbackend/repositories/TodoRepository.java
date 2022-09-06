@@ -39,4 +39,8 @@ public class TodoRepository {
 
         return new PageImpl<>(todos.subList(start, end), paging, todos.size());
     }
+
+    public Todo createTodo(Todo todo) {
+        return todosWrapper.addTodo(todo);
+    }
 }

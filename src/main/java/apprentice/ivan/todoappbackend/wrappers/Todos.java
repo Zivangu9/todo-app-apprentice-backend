@@ -11,33 +11,36 @@ import apprentice.ivan.todoappbackend.models.Todo;
 
 public class Todos {
     private List<Todo> DUMMY_DATA = List.of(
-        new Todo(0, "Create backend app", Date.valueOf("2022-09-07"), true, null, Priorities.HIGH),
-        new Todo(0, "Create frontend app", Date.valueOf("2022-09-09"), false, null, Priorities.HIGH),
-        new Todo(0, "Test BE", Date.valueOf("2022-09-09"), true, null, Priorities.MEDIUM),
-        new Todo(0, "Test FE", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
-        new Todo(0, "Create tests for BE", Date.valueOf("2022-09-09"), false, null, Priorities.LOW),
-        new Todo(0, "Create tests for FE", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
-        new Todo(0, "Deploy FrontEnd", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
-        new Todo(0, "Deply BackEnd", Date.valueOf("2022-09-09"), false, null, Priorities.HIGH),
-        new Todo(0, "Create VM", Date.valueOf("2022-09-05"), false, null, Priorities.LOW),
-        new Todo(0, "Set UP VM", Date.valueOf("2022-09-05"), false, null, Priorities.HIGH),
-        new Todo(0, "Test app on VM", Date.valueOf("2022-09-05"), false, null, Priorities.MEDIUM)
-    );
+            new Todo(0, "Create backend app", Date.valueOf("2022-09-07"), true, null, Priorities.HIGH),
+            new Todo(0, "Create frontend app", Date.valueOf("2022-09-09"), false, null, Priorities.HIGH),
+            new Todo(0, "Test BE", Date.valueOf("2022-09-09"), true, null, Priorities.MEDIUM),
+            new Todo(0, "Test FE", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
+            new Todo(0, "Create tests for BE", Date.valueOf("2022-09-09"), false, null, Priorities.LOW),
+            new Todo(0, "Create tests for FE", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
+            new Todo(0, "Deploy FrontEnd", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
+            new Todo(0, "Deply BackEnd", Date.valueOf("2022-09-09"), false, null, Priorities.HIGH),
+            new Todo(0, "Create VM", Date.valueOf("2022-09-05"), false, null, Priorities.LOW),
+            new Todo(0, "Set UP VM", Date.valueOf("2022-09-05"), false, null, Priorities.HIGH),
+            new Todo(0, "Test app on VM", Date.valueOf("2022-09-05"), false, null, Priorities.MEDIUM));
     private List<Todo> todos = new ArrayList<>();
     private Integer currentId = 1;
-    public void addDummyData(){
+
+    public void addDummyData() {
         for (Todo todo : DUMMY_DATA) {
             this.addTodo(todo);
         }
     }
+
     public Todo addTodo(Todo todo) {
         todo.setTodoId(currentId++);
         todos.add(todo);
         return todo;
     }
+
     public List<Todo> getTodos() {
         return Collections.unmodifiableList(todos);
     }
+
     public List<Todo> filterTodos(String sort, Boolean done, String name, Priorities priority) {
         List<Todo> result = new ArrayList<>(todos);
         if (done != null)
@@ -54,7 +57,7 @@ public class Todos {
                         Collections.sort(result, (a, b) -> a.getPriority().compareTo(b.getPriority()));
                         break;
                     case "priority-dec":
-                    Collections.sort(result, (a, b) -> b.getPriority().compareTo(a.getPriority()));
+                        Collections.sort(result, (a, b) -> b.getPriority().compareTo(a.getPriority()));
                         break;
                     case "due_date-asc":
                         Collections.sort(result, (a, b) -> a.getDueDate().compareTo(b.getDueDate()));
@@ -65,7 +68,6 @@ public class Todos {
                 }
             }
         }
-
         return Collections.unmodifiableList(result);
     }
 }

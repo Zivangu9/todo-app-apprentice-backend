@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Todo {
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer todoId = -1;
     private String name;
     private Date dueDate;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean doneFlag = false;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date doneDate;
