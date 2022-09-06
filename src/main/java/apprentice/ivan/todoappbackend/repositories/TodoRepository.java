@@ -20,9 +20,8 @@ public class TodoRepository {
         todosWrapper.addDummyData(); // Add dummyData for testing
     }
 
-    public Page<Todo> getAllTodos(Pageable paging) {
-        List<Todo> todos = todosWrapper.getTodos();
-        return getPage(paging, todos);
+    public List<Todo> findAll() {
+        return todosWrapper.findAll();
     }
 
     public Page<Todo> filterTodos(Pageable paging, String sort, Boolean done, String name, Priorities priority) {

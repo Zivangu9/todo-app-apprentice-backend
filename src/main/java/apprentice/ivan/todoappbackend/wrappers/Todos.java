@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import apprentice.ivan.todoappbackend.models.Priorities;
@@ -20,7 +21,7 @@ public class Todos {
             new Todo(0, "Create tests for FE", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
             new Todo(0, "Deploy FrontEnd", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
             new Todo(0, "Deply BackEnd", Date.valueOf("2022-09-09"), false, null, Priorities.HIGH),
-            new Todo(0, "Create VM", Date.valueOf("2022-09-05"), false, null, Priorities.LOW),
+            new Todo(0, "Create VM", Date.valueOf("2022-09-05"), true, null, Priorities.LOW),
             new Todo(0, "Set UP VM", Date.valueOf("2022-09-05"), false, null, Priorities.HIGH),
             new Todo(0, "Test app on VM", Date.valueOf("2022-09-05"), false, null, Priorities.MEDIUM));
     private List<Todo> todos = new ArrayList<>();
@@ -28,6 +29,9 @@ public class Todos {
 
     public void addDummyData() {
         for (Todo todo : DUMMY_DATA) {
+            if (todo.getDoneFlag())
+                todo.setDoneDate(
+                        Date.from(todo.getCreationDate().toInstant().plusSeconds(new Random().nextInt(150) + 100)));
             this.addTodo(todo);
         }
     }
@@ -60,7 +64,7 @@ public class Todos {
         return addTodo(todo);
     }
 
-    public List<Todo> getTodos() {
+    public List<Todo> findAll() {
         return Collections.unmodifiableList(todos);
     }
 

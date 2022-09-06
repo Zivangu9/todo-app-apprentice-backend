@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import apprentice.ivan.todoappbackend.models.Metrics;
 import apprentice.ivan.todoappbackend.models.Priorities;
 import apprentice.ivan.todoappbackend.models.Todo;
 import apprentice.ivan.todoappbackend.services.TodoService;
@@ -36,6 +37,12 @@ public class TodoController {
         Pageable paging = PageRequest.of(page, size);
         Page<Todo> todos = service.filterTodos(paging, sort, done, name, priority);
         return new ResponseEntity<>(todos, HttpStatus.OK);
+    }
+
+    @GetMapping("/metrics")
+    public ResponseEntity<Metrics> metricsDoneTodos() {
+        Metrics metrics = service.getMetrics();
+        return new ResponseEntity<>(metrics, HttpStatus.OK);
     }
 
     @PostMapping("")

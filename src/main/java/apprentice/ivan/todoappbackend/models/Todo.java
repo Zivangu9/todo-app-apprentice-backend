@@ -28,8 +28,6 @@ public class Todo {
         this.dueDate = dueDate;
         this.doneFlag = doneFlag;
         this.doneDate = doneDate;
-        if (doneFlag && doneDate == null)
-            this.doneDate = new Date();
         this.priority = priority;
     }
 
