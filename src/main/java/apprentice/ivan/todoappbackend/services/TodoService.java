@@ -1,5 +1,6 @@
 package apprentice.ivan.todoappbackend.services;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,19 @@ public class TodoService {
             updatedTodo.setPriority(todo.getPriority());
             return repository.save(updatedTodo);
         }
-        // validate
+        return null;
+    }
+    
+    public Todo markTodoAsDone(Integer id) {
+        Optional<Todo> todoData = repository.findById(id);
+        if (todoData.isPresent()) {
+            Todo updatedTodo = todoData.get();
+            if (!updatedTodo.getDoneFlag()) {
+                updatedTodo.setDoneFlag(true);
+                updatedTodo.setDoneDate(new Date());
+            }
+            return repository.save(updatedTodo);
+        }
         return null;
     }
 }

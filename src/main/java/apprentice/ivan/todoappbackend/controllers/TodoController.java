@@ -61,4 +61,17 @@ public class TodoController {
         }
 
     }
+
+    @PutMapping("/{id}/done")
+    public ResponseEntity<Todo> markTodoAsDone(@PathVariable Integer id) {
+        try {
+            Todo updatedTodo = service.markTodoAsDone(id);
+            if (updatedTodo == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
+    }
 }
