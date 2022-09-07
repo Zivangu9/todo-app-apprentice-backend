@@ -1,6 +1,6 @@
 package apprentice.ivan.todoappbackend.wrappers;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,25 +13,24 @@ import apprentice.ivan.todoappbackend.models.Todo;
 
 public class Todos {
     private List<Todo> DUMMY_DATA = List.of(
-            new Todo(0, "Create backend app", Date.valueOf("2022-09-07"), true, null, Priorities.HIGH),
-            new Todo(0, "Create frontend app", Date.valueOf("2022-09-09"), false, null, Priorities.HIGH),
-            new Todo(0, "Test BE", Date.valueOf("2022-09-09"), true, null, Priorities.MEDIUM),
-            new Todo(0, "Test FE", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
-            new Todo(0, "Create tests for BE", Date.valueOf("2022-09-09"), false, null, Priorities.LOW),
-            new Todo(0, "Create tests for FE", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
-            new Todo(0, "Deploy FrontEnd", Date.valueOf("2022-09-09"), false, null, Priorities.MEDIUM),
-            new Todo(0, "Deply BackEnd", Date.valueOf("2022-09-09"), false, null, Priorities.HIGH),
-            new Todo(0, "Create VM", Date.valueOf("2022-09-05"), true, null, Priorities.LOW),
-            new Todo(0, "Set UP VM", Date.valueOf("2022-09-05"), false, null, Priorities.HIGH),
-            new Todo(0, "Test app on VM", Date.valueOf("2022-09-05"), false, null, Priorities.MEDIUM));
+            new Todo(0, "Create backend app", LocalDate.of(2022, 9, 7), true, null, Priorities.HIGH),
+            new Todo(0, "Create frontend app", LocalDate.of(2022, 9, 9), false, null, Priorities.HIGH),
+            new Todo(0, "Test BE", LocalDate.of(2022, 9, 9), true, null, Priorities.MEDIUM),
+            new Todo(0, "Test FE", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
+            new Todo(0, "Create tests for BE", LocalDate.of(2022, 9, 9), false, null, Priorities.LOW),
+            new Todo(0, "Create tests for FE", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
+            new Todo(0, "Deploy FrontEnd", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
+            new Todo(0, "Deply BackEnd", LocalDate.of(2022, 9, 9), false, null, Priorities.HIGH),
+            new Todo(0, "Create VM", LocalDate.of(2022, 9, 5), true, null, Priorities.LOW),
+            new Todo(0, "Set UP VM", LocalDate.of(2022, 9, 5), false, null, Priorities.HIGH),
+            new Todo(0, "Test app on VM", LocalDate.of(2022, 9, 5), false, null, Priorities.MEDIUM));
     private List<Todo> todos = new ArrayList<>();
     private Integer currentId = 1;
 
     public void addDummyData() {
         for (Todo todo : DUMMY_DATA) {
             if (todo.getDoneFlag())
-                todo.setDoneDate(
-                        Date.from(todo.getCreationDate().toInstant().plusSeconds(new Random().nextInt(150) + 100)));
+                todo.setDoneDate(todo.getCreationDate().plusSeconds(new Random().nextInt(150) + 100));
             this.addTodo(todo);
         }
     }

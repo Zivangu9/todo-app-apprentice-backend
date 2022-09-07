@@ -1,28 +1,35 @@
 package apprentice.ivan.todoappbackend.models;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Todo {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer todoId = -1;
+    @NotBlank(message = "name is required")
+    @Size(max = 120, message = "name length must be less than 120 chars")
     private String name;
-    private Date dueDate;
+    private LocalDate dueDate;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean doneFlag = false;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date doneDate;
+    private LocalDateTime doneDate;
     private Priorities priority;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date creationDate = new Date();
+    private LocalDateTime creationDate = LocalDateTime.now();
 
     public Todo() {
     }
 
-    public Todo(Integer todoId, String name, Date dueDate, Boolean doneFlag, Date doneDate, Priorities priority) {
+    public Todo(Integer todoId, String name, LocalDate dueDate, Boolean doneFlag, LocalDateTime doneDate, Priorities priority) {
         this.todoId = todoId;
         this.name = name;
         this.dueDate = dueDate;
@@ -47,11 +54,11 @@ public class Todo {
         this.name = name;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -63,11 +70,11 @@ public class Todo {
         this.doneFlag = doneFlag;
     }
 
-    public Date getDoneDate() {
+    public LocalDateTime getDoneDate() {
         return doneDate;
     }
 
-    public void setDoneDate(Date doneDate) {
+    public void setDoneDate(LocalDateTime doneDate) {
         this.doneDate = doneDate;
     }
 
@@ -79,11 +86,11 @@ public class Todo {
         this.priority = priority;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

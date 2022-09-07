@@ -1,7 +1,8 @@
 package apprentice.ivan.todoappbackend.services;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,7 +24,6 @@ public class TodoService {
     private TodoRepository repository;
 
     public Page<Todo> filterTodos(Pageable paging, String sort, Boolean done, String name, Priorities priority) {
-        // Validate
         return repository.filterTodos(paging, sort, done, name, priority);
     }
 
@@ -37,35 +37,35 @@ public class TodoService {
         metrics.setHighAvg(getMetricByPriority(todos, Priorities.HIGH));
         return metrics;
     }
+
     private Long getMetricByPriority(List<Todo> todos, Priorities priority) {
-        return getMetric(todos.stream().filter(todo -> todo.getPriority().equals(priority)).collect(Collectors.toList()));
+        return getMetric(
+                todos.stream().filter(todo -> todo.getPriority().equals(priority)).collect(Collectors.toList()));
     }
 
     private Long getMetric(List<Todo> todos) {
         AtomicInteger count = new AtomicInteger();
         Long sum = todos.stream()
-                .mapToLong(todo -> (todo.getDoneDate().getTime() - todo.getCreationDate().getTime()) / 1000)
+                .mapToLong(todo -> (Duration.between(todo.getCreationDate(), todo.getDoneDate()).getSeconds()))
                 .reduce(0, (s, e) -> {
                     count.incrementAndGet();
                     return s + e;
                 });
         try {
-            return sum / count.get();    
+            return sum / count.get();
         } catch (ArithmeticException e) {
             return Long.valueOf(0);
         }
-        
+
     }
 
     public Todo create(Todo todo) {
-        // validate
         return repository.save(todo);
     }
 
     public Todo update(Integer id, Todo todo) {
         Optional<Todo> todoData = repository.findById(id);
         if (todoData.isPresent()) {
-            // Validate
             Todo updatedTodo = todoData.get();
             updatedTodo.setName(todo.getName());
             updatedTodo.setDueDate(todo.getDueDate());
@@ -81,7 +81,7 @@ public class TodoService {
             Todo updatedTodo = todoData.get();
             if (!updatedTodo.getDoneFlag()) {
                 updatedTodo.setDoneFlag(true);
-                updatedTodo.setDoneDate(new Date());
+                updatedTodo.setDoneDate(LocalDateTime.now());
             }
             return repository.save(updatedTodo);
         }

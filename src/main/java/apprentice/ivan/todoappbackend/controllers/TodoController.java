@@ -1,5 +1,7 @@
 package apprentice.ivan.todoappbackend.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +29,7 @@ public class TodoController {
     private TodoService service;
 
     @GetMapping("")
-    public ResponseEntity<Page<Todo>> filterTodos(
+    public Page<Todo> filterTodos(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String sort,
@@ -35,63 +37,43 @@ public class TodoController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Priorities priority) {
         Pageable paging = PageRequest.of(page, size);
-        Page<Todo> todos = service.filterTodos(paging, sort, done, name, priority);
-        return new ResponseEntity<>(todos, HttpStatus.OK);
+        return service.filterTodos(paging, sort, done, name, priority);
     }
 
     @GetMapping("/metrics")
-    public ResponseEntity<Metrics> metricsDoneTodos() {
-        Metrics metrics = service.getMetrics();
-        return new ResponseEntity<>(metrics, HttpStatus.OK);
+    public Metrics metricsDoneTodos() {
+        return service.getMetrics();
     }
 
     @PostMapping("")
-    public ResponseEntity<Todo> createTodo(@RequestBody Todo todo) {
-        try {
-            Todo createdTodo = service.create(todo);
-            return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody Todo todo) {
+        Todo createdTodo = service.create(todo);
+        return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable Integer id, @RequestBody Todo todo) {
-        try {
-            Todo updatedTodo = service.update(id, todo);
-            if (updatedTodo == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Todo> updateTodo(@PathVariable Integer id, @Valid @RequestBody Todo todo) {
+        Todo updatedTodo = service.update(id, todo);
+        if (updatedTodo == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
 
     }
 
     @PutMapping("/{id}/done")
     public ResponseEntity<Todo> markTodoAsDone(@PathVariable Integer id) {
-        try {
-            Todo updatedTodo = service.markTodoAsDone(id);
-            if (updatedTodo == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-
+        Todo updatedTodo = service.markTodoAsDone(id);
+        if (updatedTodo == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
     }
 
     @PutMapping("/{id}/undone")
     public ResponseEntity<Todo> markTodoAsUndone(@PathVariable Integer id) {
-        try {
-            Todo updatedTodo = service.markTodoAsUndone(id);
-            if (updatedTodo == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-
+        Todo updatedTodo = service.markTodoAsUndone(id);
+        if (updatedTodo == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
     }
 }
