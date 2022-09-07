@@ -75,6 +75,14 @@ public class TodoService {
         return null;
     }
 
+    public Boolean delete(Integer id) {
+        Optional<Todo> todoData = repository.findById(id);
+        if (todoData.isPresent()) {
+            return repository.delete(id);
+        }
+        return false;
+    }
+
     public Todo markTodoAsDone(Integer id) {
         Optional<Todo> todoData = repository.findById(id);
         if (todoData.isPresent()) {

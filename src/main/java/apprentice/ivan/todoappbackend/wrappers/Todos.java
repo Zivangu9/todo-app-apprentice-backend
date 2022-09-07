@@ -63,6 +63,15 @@ public class Todos {
         return addTodo(todo);
     }
 
+    public Boolean delete(Integer id) {
+        Optional<Todo> currentTodo = findById(id);
+        if (currentTodo.isPresent()) {
+            todos.remove((int) this.indexOf(currentTodo.get()));
+            return true;
+        }
+        return false;
+    }
+
     public List<Todo> findAll() {
         return Collections.unmodifiableList(todos);
     }

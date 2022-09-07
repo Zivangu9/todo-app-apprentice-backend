@@ -47,4 +47,8 @@ public class TodoRepository {
     public Todo save(Todo todo) {
         return todosWrapper.save(todo);
     }
+
+    public Boolean delete(Integer id) {
+        return todosWrapper.delete(id);
+    }
 }
