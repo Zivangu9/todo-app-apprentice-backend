@@ -1,6 +1,7 @@
 package apprentice.ivan.todoappbackend.services;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import apprentice.ivan.todoappbackend.models.Metrics;
 import apprentice.ivan.todoappbackend.models.Priorities;
 import apprentice.ivan.todoappbackend.models.Todo;
+import apprentice.ivan.todoappbackend.models.TodoRequest;
 import apprentice.ivan.todoappbackend.repositories.TodoRepository;
 
 @Service
@@ -59,13 +61,23 @@ public class TodoService {
 
     }
 
-    public Todo create(Todo todo) {
-        return repository.save(todo);
+    public Todo create(TodoRequest todoRequest) {
+        return repository.save(mapTodo(todoRequest));
     }
 
-    public Todo update(Integer id, Todo todo) {
+    private Todo mapTodo(TodoRequest todoRequest) {
+        Todo todo = new Todo();
+        todo.setName(todoRequest.getName());
+        if (todo.getDueDate() != null)
+            todo.setDueDate(LocalDate.parse(todoRequest.getDueDate()));
+        todo.setPriority(Priorities.valueOf(todoRequest.getPriority().toUpperCase()));
+        return todo;
+    }
+
+    public Todo update(Integer id, TodoRequest todoRequest) {
         Optional<Todo> todoData = repository.findById(id);
         if (todoData.isPresent()) {
+            Todo todo = mapTodo(todoRequest);
             Todo updatedTodo = todoData.get();
             updatedTodo.setName(todo.getName());
             updatedTodo.setDueDate(todo.getDueDate());

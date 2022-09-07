@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import apprentice.ivan.todoappbackend.models.Metrics;
 import apprentice.ivan.todoappbackend.models.Priorities;
 import apprentice.ivan.todoappbackend.models.Todo;
+import apprentice.ivan.todoappbackend.models.TodoRequest;
 import apprentice.ivan.todoappbackend.services.TodoService;
 
 @RestController
@@ -47,14 +48,14 @@ public class TodoController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Todo> createTodo(@Valid @RequestBody Todo todo) {
-        Todo createdTodo = service.create(todo);
+    public ResponseEntity<Todo> createTodo(@Valid @RequestBody TodoRequest todoRequest) {
+        Todo createdTodo = service.create(todoRequest);
         return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable Integer id, @Valid @RequestBody Todo todo) {
-        Todo updatedTodo = service.update(id, todo);
+    public ResponseEntity<Todo> updateTodo(@PathVariable Integer id, @Valid @RequestBody TodoRequest todoRequest) {
+        Todo updatedTodo = service.update(id, todoRequest);
         if (updatedTodo == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
@@ -64,7 +65,7 @@ public class TodoController {
     public ResponseEntity<Todo> deleteTodo(@PathVariable Integer id) {
         Boolean deleted = service.delete(id);
         if (!deleted)
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -13,17 +13,17 @@ import apprentice.ivan.todoappbackend.models.Todo;
 
 public class Todos {
     private List<Todo> DUMMY_DATA = List.of(
-            new Todo(0, "Create backend app", LocalDate.of(2022, 9, 7), true, null, Priorities.HIGH),
-            new Todo(0, "Create frontend app", LocalDate.of(2022, 9, 9), false, null, Priorities.HIGH),
-            new Todo(0, "Test BE", LocalDate.of(2022, 9, 9), true, null, Priorities.MEDIUM),
-            new Todo(0, "Test FE", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
-            new Todo(0, "Create tests for BE", LocalDate.of(2022, 9, 9), false, null, Priorities.LOW),
-            new Todo(0, "Create tests for FE", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
-            new Todo(0, "Deploy FrontEnd", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
-            new Todo(0, "Deply BackEnd", LocalDate.of(2022, 9, 9), false, null, Priorities.HIGH),
-            new Todo(0, "Create VM", LocalDate.of(2022, 9, 5), true, null, Priorities.LOW),
-            new Todo(0, "Set UP VM", LocalDate.of(2022, 9, 5), false, null, Priorities.HIGH),
-            new Todo(0, "Test app on VM", LocalDate.of(2022, 9, 5), false, null, Priorities.MEDIUM));
+            new Todo(null, "Create backend app", LocalDate.of(2022, 9, 7), true, null, Priorities.HIGH),
+            new Todo(null, "Create frontend app", LocalDate.of(2022, 9, 9), false, null, Priorities.HIGH),
+            new Todo(null, "Test BE", LocalDate.of(2022, 9, 9), true, null, Priorities.MEDIUM),
+            new Todo(null, "Test FE", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
+            new Todo(null, "Create tests for BE", LocalDate.of(2022, 9, 9), false, null, Priorities.LOW),
+            new Todo(null, "Create tests for FE", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
+            new Todo(null, "Deploy FrontEnd", LocalDate.of(2022, 9, 9), false, null, Priorities.MEDIUM),
+            new Todo(null, "Deply BackEnd", LocalDate.of(2022, 9, 9), false, null, Priorities.HIGH),
+            new Todo(null, "Create VM", LocalDate.of(2022, 9, 5), true, null, Priorities.LOW),
+            new Todo(null, "Set UP VM", LocalDate.of(2022, 9, 5), false, null, Priorities.HIGH),
+            new Todo(null, "Test app on VM", LocalDate.of(2022, 9, 5), false, null, Priorities.MEDIUM));
     private List<Todo> todos = new ArrayList<>();
     private Integer currentId = 1;
 

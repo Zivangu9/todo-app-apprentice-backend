@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 public class Todo {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer todoId = -1;
@@ -29,7 +28,8 @@ public class Todo {
     public Todo() {
     }
 
-    public Todo(Integer todoId, String name, LocalDate dueDate, Boolean doneFlag, LocalDateTime doneDate, Priorities priority) {
+    public Todo(Integer todoId, String name, LocalDate dueDate, Boolean doneFlag, LocalDateTime doneDate,
+            Priorities priority) {
         this.todoId = todoId;
         this.name = name;
         this.dueDate = dueDate;

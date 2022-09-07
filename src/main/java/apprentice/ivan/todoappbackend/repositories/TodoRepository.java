@@ -16,7 +16,7 @@ import apprentice.ivan.todoappbackend.wrappers.Todos;
 public class TodoRepository {
     private Todos todosWrapper = new Todos();
 
-    public TodoRepository() {
+    public void addDummyData() {
         todosWrapper.addDummyData(); // Add dummyData for testing
     }
 
