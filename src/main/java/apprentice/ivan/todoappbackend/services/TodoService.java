@@ -68,7 +68,7 @@ public class TodoService {
     private Todo mapTodo(TodoRequest todoRequest) {
         Todo todo = new Todo();
         todo.setName(todoRequest.getName());
-        if (todo.getDueDate() != null)
+        if (todoRequest.getDueDate() != null)
             todo.setDueDate(LocalDate.parse(todoRequest.getDueDate()));
         todo.setPriority(Priorities.valueOf(todoRequest.getPriority().toUpperCase()));
         return todo;
