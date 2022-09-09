@@ -3,6 +3,7 @@ package apprentice.ivan.todoappbackend.wrappers;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -95,14 +96,20 @@ public class Todos {
                     case "priority-asc":
                         Collections.sort(result, (a, b) -> a.getPriority().compareTo(b.getPriority()));
                         break;
-                    case "priority-dec":
+                    case "priority-desc":
                         Collections.sort(result, (a, b) -> b.getPriority().compareTo(a.getPriority()));
                         break;
                     case "due_date-asc":
-                        Collections.sort(result, (a, b) -> a.getDueDate().compareTo(b.getDueDate()));
+                        result = result.stream()
+                                .sorted(Comparator.comparing(Todo::getDueDate,
+                                        Comparator.nullsLast(Comparator.reverseOrder())))
+                                .collect(Collectors.toList());
                         break;
-                    case "due_date-dec":
-                        Collections.sort(result, (a, b) -> b.getDueDate().compareTo(a.getDueDate()));
+                    case "due_date-desc":
+                        result = result.stream()
+                                .sorted(Comparator.comparing(Todo::getDueDate,
+                                        Comparator.nullsLast(Comparator.naturalOrder())))
+                                .collect(Collectors.toList());
                         break;
                 }
             }
