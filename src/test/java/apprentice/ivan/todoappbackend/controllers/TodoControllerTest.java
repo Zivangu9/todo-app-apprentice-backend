@@ -50,14 +50,14 @@ public class TodoControllerTest {
 
     @Test
     public void postTodoCorrect() {
-        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-9-15", "MEDIUM");
+        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-09-15", "MEDIUM");
         ResponseEntity<Todo> entity = template.postForEntity("/todos", todoRequest, Todo.class);
         assertEquals(HttpStatus.CREATED, entity.getStatusCode());
     }
 
     @Test
     public void postTodoWithoutName() {
-        TodoRequest todoRequest = new TodoRequest("", "2022-9-15", "MEDIUM");
+        TodoRequest todoRequest = new TodoRequest("", "2022-09-15", "MEDIUM");
         ResponseEntity<Todo> entity = template.postForEntity("/todos", todoRequest, Todo.class);
         assertEquals(HttpStatus.BAD_REQUEST, entity.getStatusCode());
     }
@@ -71,14 +71,14 @@ public class TodoControllerTest {
 
     @Test
     public void postTodoWithoutPriority() {
-        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-9-15", null);
+        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-09-15", null);
         ResponseEntity<Todo> entity = template.postForEntity("/todos", todoRequest, Todo.class);
         assertEquals(HttpStatus.BAD_REQUEST, entity.getStatusCode());
     }
 
     @Test
     public void updateTodoComplete() {
-        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-9-15", "HIGH");
+        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-09-15", "HIGH");
         ResponseEntity<Todo> entity = template.exchange("/todos/2", HttpMethod.PUT,
                 new HttpEntity<TodoRequest>(todoRequest), Todo.class);
         assertEquals(HttpStatus.OK, entity.getStatusCode());
@@ -86,7 +86,7 @@ public class TodoControllerTest {
 
     @Test
     public void updateTodoWithoutPriority() {
-        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-9-15", null);
+        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-09-15", null);
         ResponseEntity<Todo> entity = template.exchange("/todos/2", HttpMethod.PUT,
                 new HttpEntity<TodoRequest>(todoRequest), Todo.class);
         assertEquals(HttpStatus.BAD_REQUEST, entity.getStatusCode());
@@ -94,7 +94,7 @@ public class TodoControllerTest {
 
     @Test
     public void updateTodoInvalidId() {
-        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-9-15", "HIGH");
+        TodoRequest todoRequest = new TodoRequest("Unit testing", "2022-09-15", "HIGH");
         ResponseEntity<Todo> entity = template.exchange("/todos/9999", HttpMethod.PUT,
                 new HttpEntity<TodoRequest>(todoRequest), Todo.class);
         assertEquals(HttpStatus.NOT_FOUND, entity.getStatusCode());
