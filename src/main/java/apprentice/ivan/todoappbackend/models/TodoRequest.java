@@ -15,6 +15,9 @@ public class TodoRequest {
     @Pattern(regexp = "(?i)(LOW|MEDIUM|HIGH)", message = "priority can only be LOW, MEDIUM or HIGH")
     private String priority;
 
+    public TodoRequest() {
+    }
+
     public TodoRequest(String name, String dueDate, String priority) {
         this.name = name;
         this.dueDate = dueDate;

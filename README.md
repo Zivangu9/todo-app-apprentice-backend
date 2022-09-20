@@ -63,8 +63,7 @@ src
 │   │               ├── controllers
 │   │               ├── models
 │   │               ├── repositories
-│   │               ├── services
-│   │               └── wrappers
+│   │               └── services
 │   └── resources
 └── test
     └── java
@@ -77,4 +76,3 @@ src
 - **Models**: Entidades del sistema.
 - **Repositories**: Todos los repositorios del sistema.
 - **Services**: Todos los servicios del sistema.
-- **Wrappers**: Las clases que sirven para almacenar los datos en memoria.

@@ -4,8 +4,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,8 +27,12 @@ import apprentice.ivan.todoappbackend.services.TodoService;
 @RequestMapping("/todos")
 @CrossOrigin
 public class TodoController {
-    @Autowired
     private TodoService service;
+
+    @Autowired
+    public TodoController(TodoService service) {
+        this.service = service;
+    }
 
     @GetMapping("")
     public Page<Todo> filterTodos(
@@ -40,23 +42,18 @@ public class TodoController {
             @RequestParam(required = false) Boolean done,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Priorities priority) {
-        Pageable paging = PageRequest.of(page, size);
-        return service.filterTodos(paging, sort, done, name, priority);
-    }
-
-    @GetMapping("/metrics")
-    public Metrics metricsDoneTodos() {
-        return service.getMetrics();
+        return service.filterTodos(page, size, sort, done, name, priority);
     }
 
     @PostMapping("")
     public ResponseEntity<Todo> createTodo(@Valid @RequestBody TodoRequest todoRequest) {
-        Todo createdTodo = service.create(todoRequest);
+        Todo createdTodo = service.crete(todoRequest);
         return new ResponseEntity<>(createdTodo, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable Integer id, @Valid @RequestBody TodoRequest todoRequest) {
+    public ResponseEntity<Todo> updateTodo(@PathVariable Integer id,
+            @Valid @RequestBody TodoRequest todoRequest) {
         Todo updatedTodo = service.update(id, todoRequest);
         if (updatedTodo == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -86,4 +83,10 @@ public class TodoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
     }
+
+    @GetMapping("/metrics")
+    public Metrics metricsDoneTodos() {
+        return service.getMetrics();
+    }
+
 }

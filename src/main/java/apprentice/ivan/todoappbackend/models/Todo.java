@@ -3,38 +3,36 @@ package apprentice.ivan.todoappbackend.models;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.keyvalue.annotation.KeySpace;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+@KeySpace("todos")
+@Entity
 public class Todo {
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Integer todoId = -1;
-    @NotBlank(message = "name is required")
-    @Size(max = 120, message = "name length must be less than 120 chars")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer todoId;
+
     private String name;
     private LocalDate dueDate;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Boolean doneFlag = false;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean done = false;
     private LocalDateTime doneDate;
+    @Enumerated
     private Priorities priority;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime creationDate = LocalDateTime.now();
 
     public Todo() {
     }
 
-    public Todo(Integer todoId, String name, LocalDate dueDate, Boolean doneFlag, LocalDateTime doneDate,
-            Priorities priority) {
+    public Todo(Integer todoId, String name, LocalDate dueDate, Priorities priority) {
         this.todoId = todoId;
         this.name = name;
         this.dueDate = dueDate;
-        this.doneFlag = doneFlag;
-        this.doneDate = doneDate;
         this.priority = priority;
     }
 
@@ -62,12 +60,12 @@ public class Todo {
         this.dueDate = dueDate;
     }
 
-    public Boolean getDoneFlag() {
-        return doneFlag;
+    public Boolean getDone() {
+        return done;
     }
 
-    public void setDoneFlag(Boolean doneFlag) {
-        this.doneFlag = doneFlag;
+    public void setDone(Boolean done) {
+        this.done = done;
     }
 
     public LocalDateTime getDoneDate() {
@@ -92,6 +90,31 @@ public class Todo {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((todoId == null) ? 0 : todoId.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Todo other = (Todo) obj;
+        if (todoId == null) {
+            if (other.todoId != null)
+                return false;
+        } else if (!todoId.equals(other.todoId))
+            return false;
+        return true;
     }
 
 }

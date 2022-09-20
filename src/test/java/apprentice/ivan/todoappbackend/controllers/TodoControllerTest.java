@@ -3,6 +3,8 @@ package apprentice.ivan.todoappbackend.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.event.annotation.AfterTestMethod;
 
+import apprentice.ivan.todoappbackend.models.Priorities;
 import apprentice.ivan.todoappbackend.models.Todo;
 import apprentice.ivan.todoappbackend.models.TodoRequest;
 import apprentice.ivan.todoappbackend.repositories.TodoRepository;
@@ -32,7 +35,16 @@ public class TodoControllerTest {
 
     @BeforeAll
     public void setUp(@Autowired TodoRepository repository){
-        repository.addDummyData();
+        repository.save(new Todo(1, "Create frontend app", LocalDate.of(2022, 9, 9), Priorities.HIGH));
+        repository.save(new Todo(2, "Test BE", LocalDate.of(2022, 9, 9), Priorities.MEDIUM));
+        repository.save(new Todo(3, "Test FE", LocalDate.of(2022, 9, 9), Priorities.MEDIUM));
+        repository.save(new Todo(4, "Create tests for BE", LocalDate.of(2022, 9, 9), Priorities.LOW));
+        repository.save(new Todo(5, "Create tests for FE", LocalDate.of(2022, 9, 9), Priorities.MEDIUM));
+        repository.save(new Todo(6, "Deploy FrontEnd", LocalDate.of(2022, 9, 9), Priorities.MEDIUM));
+        repository.save(new Todo(7, "Deply BackEnd", LocalDate.of(2022, 9, 9), Priorities.HIGH));
+        repository.save(new Todo(8, "Create VM", LocalDate.of(2022, 9, 5), Priorities.LOW));
+        repository.save(new Todo(9, "Set UP VM", LocalDate.of(2022, 9, 5), Priorities.HIGH));
+        repository.save(new Todo(10, "Test app on VM", LocalDate.of(2022, 9, 5), Priorities.MEDIUM));
     }
 
     @Test

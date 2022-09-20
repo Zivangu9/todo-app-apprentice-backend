@@ -1,54 +1,27 @@
 package apprentice.ivan.todoappbackend.repositories;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.keyvalue.repository.KeyValueRepository;
 import org.springframework.stereotype.Repository;
 
 import apprentice.ivan.todoappbackend.models.Priorities;
 import apprentice.ivan.todoappbackend.models.Todo;
-import apprentice.ivan.todoappbackend.wrappers.Todos;
 
 @Repository
-public class TodoRepository {
-    private Todos todosWrapper = new Todos();
+public interface TodoRepository extends KeyValueRepository<Todo, Integer> {
+    public Page<Todo> findByDoneAndNameLikeAndPriority(Boolean done, String name, Priorities priority,
+            Pageable pageable);
 
-    public void addDummyData() {
-        todosWrapper.addDummyData(); // Add dummyData for testing
-    }
+    public Page<Todo> findByDoneAndNameLike(Boolean done, String name, Pageable pageable);
 
-    public List<Todo> findAll() {
-        return todosWrapper.findAll();
-    }
+    public Page<Todo> findByDoneAndPriority(Boolean done, Priorities priority, Pageable pageable);
 
-    public Page<Todo> filterTodos(Pageable paging, String sort, Boolean done, String name, Priorities priority) {
-        List<Todo> todos = todosWrapper.filterTodos(sort, done, name, priority);
-        return getPage(paging, todos);
-    }
+    public Page<Todo> findByNameLikeAndPriority(String name, Priorities priority, Pageable pageable);
 
-    private Page<Todo> getPage(Pageable paging, List<Todo> todos) {
-        int start = paging.getPageNumber() * paging.getPageSize();
-        int end = start + paging.getPageSize();
-        if (start > todos.size())
-            start = todos.size();
-        if (end > todos.size())
-            end = todos.size();
+    public Page<Todo> findByDone(Boolean done, Pageable pageable);
 
-        return new PageImpl<>(todos.subList(start, end), paging, todos.size());
-    }
+    public Page<Todo> findByNameLike(String name, Pageable pageable);
 
-    public Optional<Todo> findById(Integer id) {
-        return todosWrapper.findById(id);
-    }
-
-    public Todo save(Todo todo) {
-        return todosWrapper.save(todo);
-    }
-
-    public Boolean delete(Integer id) {
-        return todosWrapper.delete(id);
-    }
+    public Page<Todo> findByPriority(Priorities priority, Pageable pageable);
 }
